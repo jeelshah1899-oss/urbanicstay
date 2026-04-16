@@ -1,3 +1,34 @@
+// Preloader
+const preloader = document.getElementById('preloader');
+const pageShell = document.querySelector('.page-shell');
+
+function hidePreloader() {
+  if (preloader) {
+    preloader.classList.add('is-hidden');
+  }
+  if (pageShell) {
+    pageShell.classList.add('is-revealed');
+  }
+}
+
+// Hide preloader after animations complete (or fallback after 4s)
+if (preloader) {
+  const minLoadTime = 3200; // Minimum time to show preloader
+  const startTime = Date.now();
+  
+  window.addEventListener('load', () => {
+    const elapsed = Date.now() - startTime;
+    const remaining = Math.max(0, minLoadTime - elapsed);
+    setTimeout(hidePreloader, remaining);
+  });
+  
+  // Fallback in case load event doesn't fire
+  setTimeout(hidePreloader, 5000);
+} else {
+  // No preloader, reveal page immediately
+  if (pageShell) pageShell.classList.add('is-revealed');
+}
+
 // Header scroll effect
 const header = document.querySelector('.site-header');
 if (header) {

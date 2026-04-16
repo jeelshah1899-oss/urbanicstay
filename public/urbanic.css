@@ -1,5 +1,211 @@
 @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Jost:wght@300;400;500;600&display=swap');
 
+/* Premium Animations */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(40px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeInDown {
+  from { opacity: 0; transform: translateY(-30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes scaleIn {
+  from { opacity: 0; transform: scale(0.9); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+@keyframes slideInLeft {
+  from { opacity: 0; transform: translateX(-60px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes slideInRight {
+  from { opacity: 0; transform: translateX(60px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% center; }
+  100% { background-position: 200% center; }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.6; }
+}
+
+@keyframes goldGlow {
+  0%, 100% { box-shadow: 0 0 20px rgba(178, 168, 101, 0.2); }
+  50% { box-shadow: 0 0 40px rgba(178, 168, 101, 0.4); }
+}
+
+@keyframes drawLine {
+  from { width: 0; }
+  to { width: 100%; }
+}
+
+@keyframes rotateIn {
+  from { opacity: 0; transform: rotate(-10deg) scale(0.9); }
+  to { opacity: 1; transform: rotate(0) scale(1); }
+}
+
+/* Preloader Styles */
+.preloader {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: linear-gradient(135deg, #0d1209 0%, #161f12 50%, #10170d 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1), visibility 0.8s;
+}
+
+.preloader.is-hidden {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.preloader-content {
+  text-align: center;
+  position: relative;
+}
+
+.preloader-logo {
+  width: 120px;
+  height: 120px;
+  margin: 0 auto 32px;
+  position: relative;
+  animation: float 3s ease-in-out infinite;
+}
+
+.preloader-logo svg {
+  width: 100%;
+  height: 100%;
+}
+
+.preloader-logo .logo-ring {
+  stroke-dasharray: 314;
+  stroke-dashoffset: 314;
+  animation: drawRing 2s ease-out forwards;
+}
+
+@keyframes drawRing {
+  to { stroke-dashoffset: 0; }
+}
+
+.preloader-logo .logo-arch {
+  stroke-dasharray: 150;
+  stroke-dashoffset: 150;
+  animation: drawArch 1.5s ease-out 0.5s forwards;
+}
+
+@keyframes drawArch {
+  to { stroke-dashoffset: 0; }
+}
+
+.preloader-logo .logo-door {
+  opacity: 0;
+  animation: fadeIn 0.6s ease-out 1.2s forwards;
+}
+
+.preloader-logo .logo-dot {
+  opacity: 0;
+  animation: scaleIn 0.4s ease-out 1.5s forwards;
+}
+
+.preloader-brand {
+  opacity: 0;
+  animation: fadeInUp 0.8s ease-out 1s forwards;
+}
+
+.preloader-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 2.4rem;
+  font-weight: 600;
+  letter-spacing: 0.3em;
+  color: var(--text);
+  margin: 0;
+}
+
+.preloader-subtitle {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.1rem;
+  font-style: italic;
+  letter-spacing: 0.5em;
+  color: var(--accent);
+  margin-top: 4px;
+}
+
+.preloader-bar {
+  width: 180px;
+  height: 1px;
+  background: rgba(178, 168, 101, 0.2);
+  margin: 32px auto 0;
+  position: relative;
+  overflow: hidden;
+  opacity: 0;
+  animation: fadeIn 0.5s ease-out 1.4s forwards;
+}
+
+.preloader-bar::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 0;
+  background: linear-gradient(90deg, transparent, var(--accent-bright), var(--accent), transparent);
+  animation: loadBar 2s ease-out 1.6s forwards;
+}
+
+@keyframes loadBar {
+  to { width: 100%; }
+}
+
+.preloader-dots {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 24px;
+  opacity: 0;
+  animation: fadeIn 0.5s ease-out 1.8s forwards;
+}
+
+.preloader-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--accent);
+  animation: pulse 1.4s ease-in-out infinite;
+}
+
+.preloader-dot:nth-child(2) { animation-delay: 0.2s; }
+.preloader-dot:nth-child(3) { animation-delay: 0.4s; }
+
+/* Page reveal after preloader */
+.page-shell {
+  opacity: 0;
+}
+
+.page-shell.is-revealed {
+  animation: fadeIn 0.8s ease-out forwards;
+}
+
 :root {
   --bg: #161f12;
   --bg-deep: #10170d;
@@ -178,6 +384,25 @@ img {
   background: linear-gradient(135deg, var(--accent-bright), var(--accent));
   color: #182012;
   box-shadow: 0 16px 40px rgba(178, 168, 101, 0.2);
+  position: relative;
+  overflow: hidden;
+}
+
+.button-solid::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+  transform: translateX(-100%);
+  transition: transform 0.6s ease;
+}
+
+.button-solid:hover::before {
+  transform: translateX(100%);
+}
+
+.button-solid:hover {
+  box-shadow: 0 20px 50px rgba(178, 168, 101, 0.35);
 }
 
 .button-ghost {
@@ -454,6 +679,21 @@ img {
   border-radius: var(--radius-md);
   padding: 26px;
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.03);
+  transition: transform 0.5s cubic-bezier(0.23, 1, 0.32, 1), 
+              border-color 0.4s ease, 
+              box-shadow 0.5s ease;
+}
+
+.stat-card:hover,
+.neighbourhood-card:hover,
+.listing-card:hover,
+.experience-card:hover,
+.testimonial-card:hover {
+  transform: translateY(-8px);
+  border-color: var(--line-strong);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3), 
+              0 0 40px rgba(178, 168, 101, 0.08),
+              inset 0 1px 0 rgba(255, 255, 255, 0.05);
 }
 
 .stat-card strong,
@@ -499,6 +739,14 @@ img {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  transition: transform 0.8s cubic-bezier(0.23, 1, 0.32, 1), filter 0.5s ease;
+}
+
+.neighbourhood-card:hover .neighbourhood-media img,
+.listing-card:hover .listing-media img,
+.gallery-card:hover img {
+  transform: scale(1.08);
+  filter: brightness(1.05);
 }
 
 .neighbourhood-copy,
@@ -672,13 +920,162 @@ img {
 
 .fade-up {
   opacity: 0;
-  transform: translateY(24px);
-  transition: opacity 0.7s ease, transform 0.7s ease;
+  transform: translateY(40px);
+  transition: opacity 0.8s cubic-bezier(0.23, 1, 0.32, 1), 
+              transform 0.8s cubic-bezier(0.23, 1, 0.32, 1);
 }
 
 .fade-up.is-visible {
   opacity: 1;
   transform: translateY(0);
+}
+
+/* Staggered animations for grid children */
+.fade-up.is-visible .stat-card,
+.fade-up.is-visible .neighbourhood-card,
+.fade-up.is-visible .listing-card,
+.fade-up.is-visible .experience-card,
+.fade-up.is-visible .testimonial-card,
+.fade-up.is-visible .gallery-card {
+  animation: fadeInUp 0.7s cubic-bezier(0.23, 1, 0.32, 1) both;
+}
+
+.fade-up.is-visible > *:nth-child(1) { animation-delay: 0s; }
+.fade-up.is-visible > *:nth-child(2) { animation-delay: 0.1s; }
+.fade-up.is-visible > *:nth-child(3) { animation-delay: 0.2s; }
+.fade-up.is-visible > *:nth-child(4) { animation-delay: 0.3s; }
+.fade-up.is-visible > *:nth-child(5) { animation-delay: 0.4s; }
+.fade-up.is-visible > *:nth-child(6) { animation-delay: 0.5s; }
+.fade-up.is-visible > *:nth-child(7) { animation-delay: 0.6s; }
+.fade-up.is-visible > *:nth-child(8) { animation-delay: 0.7s; }
+.fade-up.is-visible > *:nth-child(9) { animation-delay: 0.8s; }
+
+/* Hero entrance animations */
+.hero-copy .eyebrow {
+  opacity: 0;
+  animation: slideInLeft 0.8s cubic-bezier(0.23, 1, 0.32, 1) 0.3s forwards;
+}
+
+.hero-title {
+  opacity: 0;
+  animation: fadeInUp 1s cubic-bezier(0.23, 1, 0.32, 1) 0.5s forwards;
+}
+
+.hero-copy > p {
+  opacity: 0;
+  animation: fadeInUp 0.8s cubic-bezier(0.23, 1, 0.32, 1) 0.7s forwards;
+}
+
+.hero-actions {
+  opacity: 0;
+  animation: fadeInUp 0.8s cubic-bezier(0.23, 1, 0.32, 1) 0.9s forwards;
+}
+
+.hero-card {
+  opacity: 0;
+  animation: slideInRight 1s cubic-bezier(0.23, 1, 0.32, 1) 0.6s forwards;
+}
+
+/* Section title animations */
+.section-title {
+  position: relative;
+}
+
+.section-title::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: -8px;
+  width: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--accent), transparent);
+  transition: width 0.8s cubic-bezier(0.23, 1, 0.32, 1) 0.3s;
+}
+
+.fade-up.is-visible .section-title::after,
+.section-title.is-visible::after {
+  width: 80px;
+}
+
+/* Eyebrow line animation */
+.eyebrow::before {
+  animation: drawLine 0.6s ease-out 0.2s both;
+}
+
+/* Listing featured hover */
+.listing-featured {
+  transition: transform 0.5s cubic-bezier(0.23, 1, 0.32, 1), box-shadow 0.5s ease;
+}
+
+.listing-featured:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.4), 0 0 60px rgba(178, 168, 101, 0.1);
+}
+
+.listing-featured-media img {
+  transition: transform 1s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.listing-featured:hover .listing-featured-media img {
+  transform: scale(1.05);
+}
+
+/* Contact banner hover */
+.contact-banner {
+  transition: transform 0.5s cubic-bezier(0.23, 1, 0.32, 1), box-shadow 0.5s ease;
+}
+
+.contact-banner:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.4), 0 0 40px rgba(178, 168, 101, 0.1);
+}
+
+/* Brand logo animation */
+.brand {
+  transition: transform 0.4s ease;
+}
+
+.brand:hover {
+  transform: translateY(-2px);
+}
+
+.brand-mark {
+  transition: border-color 0.4s ease, box-shadow 0.4s ease;
+}
+
+.brand:hover .brand-mark {
+  border-color: var(--accent);
+  box-shadow: 0 0 20px rgba(178, 168, 101, 0.2);
+}
+
+/* Nav link underline animation */
+.site-nav-links a {
+  position: relative;
+}
+
+.site-nav-links a::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: -4px;
+  width: 0;
+  height: 1px;
+  background: var(--accent);
+  transition: width 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.site-nav-links a:hover::after {
+  width: 100%;
+}
+
+/* Footer link hover */
+.footer-list a {
+  transition: color 0.3s ease, padding-left 0.3s ease;
+}
+
+.footer-list a:hover {
+  color: var(--accent-bright);
+  padding-left: 8px;
 }
 
 .listing-hero {
