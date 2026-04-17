@@ -14,7 +14,7 @@ function hidePreloader() {
 
 // Hide preloader after animations complete (or fallback after 4s)
 if (preloader) {
-  const minLoadTime = 3200; // Minimum time to show preloader
+  const minLoadTime = 3800; // Keep visible through full preloader timeline
   const startTime = Date.now();
   
   window.addEventListener('load', () => {
@@ -22,9 +22,12 @@ if (preloader) {
     const remaining = Math.max(0, minLoadTime - elapsed);
     setTimeout(hidePreloader, remaining);
   });
-
-  // Handle restored pages and cross-browser load edge cases
-  window.addEventListener('pageshow', hidePreloader);
+  // Handle restored pages from bfcache without replaying the full preloader
+  window.addEventListener('pageshow', event => {
+    if (event.persisted) {
+      hidePreloader();
+    }
+  });
   
   // Fallback in case load event doesn't fire
   setTimeout(hidePreloader, 5000);
