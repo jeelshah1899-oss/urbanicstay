@@ -5,6 +5,7 @@ const pageShell = document.querySelector('.page-shell');
 function hidePreloader() {
   if (preloader) {
     preloader.classList.add('is-hidden');
+    preloader.setAttribute('aria-hidden', 'true');
   }
   if (pageShell) {
     pageShell.classList.add('is-revealed');
@@ -21,6 +22,9 @@ if (preloader) {
     const remaining = Math.max(0, minLoadTime - elapsed);
     setTimeout(hidePreloader, remaining);
   });
+
+  // Handle restored pages and cross-browser load edge cases
+  window.addEventListener('pageshow', hidePreloader);
   
   // Fallback in case load event doesn't fire
   setTimeout(hidePreloader, 5000);
@@ -59,15 +63,20 @@ if (navToggle && navLinks) {
 // Fade-up reveal on scroll
 const fadeEls = document.querySelectorAll('.fade-up');
 if (fadeEls.length) {
-  const obs = new IntersectionObserver(entries => {
-    entries.forEach(e => {
-      if (e.isIntersecting) {
-        e.target.classList.add('is-visible');
-        obs.unobserve(e.target);
-      }
-    });
-  }, { threshold: 0.15 });
-  fadeEls.forEach(el => obs.observe(el));
+  if ('IntersectionObserver' in window) {
+    const obs = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('is-visible');
+          obs.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.15 });
+    fadeEls.forEach(el => obs.observe(el));
+  } else {
+    // Fallback for older mobile browsers
+    fadeEls.forEach(el => el.classList.add('is-visible'));
+  }
 }
 
 // Enquiry modal
