@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Listing Details — Urbanic Stay</title>
+  <meta name="description" content="Detailed Urbanic Stay listing pages with transparent guest info, trust signals, and direct Airbnb booking links.">
+  <link rel="stylesheet" href="urbanic.css">
+</head>
+<body data-page="listing">
+<div class="preloader" id="preloader">
+  <div class="preloader-content">
+    <div class="preloader-logo">
+      <svg viewBox="0 0 100 100" fill="none">
+        <circle class="logo-ring" cx="50" cy="50" r="45" stroke="#b2a865" stroke-width="1" fill="none"/>
+        <path class="logo-arch" d="M25 85V47a25 25 0 0 1 50 0v38" stroke="#b2a865" stroke-width="2" fill="none"/>
+        <g class="logo-door">
+          <rect x="32" y="60" width="36" height="25" stroke="#b2a865" stroke-width="1" fill="none" opacity="0.6"/>
+          <path d="M42 85v-12a8 8 0 0 1 16 0v12" stroke="#b2a865" stroke-width="1" fill="none"/>
+        </g>
+        <circle class="logo-dot" cx="50" cy="38" r="4" fill="#b2a865"/>
+      </svg>
+    </div>
+    <div class="preloader-brand">
+      <h1 class="preloader-title">URBANIC</h1>
+      <p class="preloader-subtitle">stay</p>
+    </div>
+    <div class="preloader-bar"></div>
+    <div class="preloader-dots">
+      <span class="preloader-dot"></span>
+      <span class="preloader-dot"></span>
+      <span class="preloader-dot"></span>
+    </div>
+  </div>
+</div>
+<div class="page-shell">
+
+  <header class="site-header">
+    <div class="site-header-inner">
+      <a href="index.html" class="brand">
+        <div class="brand-mark">
+          <svg width="28" height="28" viewBox="0 0 36 36" fill="none">
+            <circle cx="18" cy="18" r="16" stroke="#b2a865" stroke-width="0.8" opacity="0.5"/>
+            <path d="M8 30V17a10 10 0 0 1 20 0v13" stroke="#b2a865" stroke-width="1.2"/>
+            <rect x="11" y="22" width="14" height="8" stroke="#b2a865" stroke-width="0.7" opacity="0.6"/>
+            <path d="M15 30v-4a3 3 0 0 1 6 0v4" stroke="#b2a865" stroke-width="0.6"/>
+            <circle cx="18" cy="14" r="1.5" fill="#b2a865"/>
+          </svg>
+        </div>
+        <div class="brand-copy">
+          <span class="brand-title">URBANIC</span>
+          <span class="brand-subtitle">stay</span>
+        </div>
+      </a>
+      <nav class="site-nav">
+        <div class="site-nav-links">
+          <a href="index.html#listings">Listings</a>
+          <a href="index.html#guest-fit">Guest Fit</a>
+          <a href="index.html#contact">Contact</a>
+        </div>
+        <button class="button button-solid" data-enquire="">Enquire Now</button>
+        <button class="nav-toggle" aria-expanded="false" aria-label="Menu"><span></span></button>
+      </nav>
+    </div>
+  </header>
+
+  <section class="listing-hero">
+    <div class="listing-hero-panel" id="listingHeroPanel">
+      <div class="listing-hero-layout">
+        <div class="listing-hero-copy">
+          <nav class="breadcrumbs">
+            <a href="index.html">Home</a> / <a href="index.html#listings">Listings</a> / <span id="breadcrumbTitle">Listing</span>
+          </nav>
+          <p class="eyebrow" id="listingLocationLabel">Mumbai, India</p>
+          <h1 id="listingTitle">Listing Title</h1>
+          <p id="listingDescription">Listing details are loading.</p>
+          <div class="listing-meta" style="margin-top:24px;" id="listingMeta"></div>
+          <div class="listing-trust-inline" id="listingTrustSignals"></div>
+          <div class="listing-actions" style="margin-top:28px;">
+            <button class="button button-solid" data-enquire="" data-listing-enquire>Enquire Now</button>
+            <a href="#" class="button button-ghost" id="primaryAirbnbLink" target="_blank" rel="noopener noreferrer">View on Airbnb</a>
+            <a href="#gallery" class="button button-ghost">View Gallery</a>
+          </div>
+        </div>
+        <div class="listing-visual-stack">
+          <div class="listing-visual-main">
+            <img id="heroImageMain" src="" alt="">
+          </div>
+          <div class="listing-visual-column">
+            <div class="listing-visual-small">
+              <img id="heroImageOne" src="" alt="">
+            </div>
+            <div class="listing-visual-small">
+              <img id="heroImageTwo" src="" alt="">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="faq">
+    <div class="container">
+      <p class="eyebrow fade-up">Guest Guidance</p>
+      <h2 class="section-title fade-up">Questions Guests Ask Most</h2>
+      <div class="faq-accordion fade-up" id="faqAccordion"></div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="listing-detail-layout">
+        <div class="listing-detail-grid">
+          <article class="listing-detail-card fade-up">
+            <h3>About This Listing</h3>
+            <p id="detailDescription"></p>
+            <p style="margin-top:12px;" id="detailSubcopy"></p>
+          </article>
+          <article class="listing-detail-card fade-up">
+            <h3>Listing Highlights</h3>
+            <ul class="detail-list" id="listingHighlights"></ul>
+          </article>
+          <article class="listing-detail-card fade-up">
+            <h3>Location Context</h3>
+            <p>Travel times below help families, remote workers, and business guests evaluate day-to-day convenience before booking.</p>
+            <div class="detail-grid-inline location-context-grid" style="margin-top:18px;" id="locationContextGrid"></div>
+            <h3 style="margin-top:24px;">Nearby hotspots</h3>
+            <ul class="detail-list" id="hotspotList"></ul>
+          </article>
+          <article class="listing-detail-card fade-up">
+            <h3>Quick Snapshot</h3>
+            <div class="detail-grid-inline" style="margin-top:18px;" id="quickSnapshotGrid"></div>
+          </article>
+        </div>
+        <aside class="listing-sidebar fade-up">
+          <h3>Check live availability</h3>
+          <form class="availability-mini-form" id="availabilityMiniForm">
+            <div class="availability-mini-grid">
+              <div class="field">
+                <label for="availCheckIn">Check-in</label>
+                <input type="date" id="availCheckIn" name="check_in">
+              </div>
+              <div class="field">
+                <label for="availCheckOut">Check-out</label>
+                <input type="date" id="availCheckOut" name="check_out">
+              </div>
+              <div class="field field-full">
+                <label for="availGuests">Guests</label>
+                <select id="availGuests" name="adults">
+                  <option value="">Select guests</option>
+                  <option value="1">1 guest</option>
+                  <option value="2">2 guests</option>
+                  <option value="3">3 guests</option>
+                  <option value="4">4 guests</option>
+                  <option value="5">5 guests</option>
+                  <option value="6">6 guests</option>
+                  <option value="8">8 guests</option>
+                  <option value="10">10 guests</option>
+                </select>
+              </div>
+            </div>
+            <button class="button button-solid" type="submit" style="width:100%;margin-top:14px;">Check on Airbnb</button>
+            <p class="form-note">Your dates and guest count are passed directly to Airbnb.</p>
+          </form>
+
+          <div class="accent-line" style="margin:24px 0;"></div>
+          <h3>Direct Links</h3>
+          <ul class="detail-list" id="sidebarLinks"></ul>
+          <div class="accent-line" style="margin:24px 0;"></div>
+          <h3>Need a fit check?</h3>
+          <p>Tell us if you’re traveling with kids, working remotely, or planning group logistics, and we’ll help you evaluate the right listing.</p>
+          <button class="button button-solid" style="width:100%;margin-top:18px;" data-enquire="" data-listing-enquire>Enquire Now</button>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="gallery">
+    <div class="container">
+      <p class="eyebrow fade-up">Photo Gallery</p>
+      <h2 class="section-title fade-up">Images for This Listing</h2>
+      <div class="gallery-grid fade-up" style="margin-top:32px;" id="listingGallery"></div>
+    </div>
+  </section>
+
+  <section class="section" id="contact">
+    <div class="container">
+      <div class="contact-banner fade-up">
+        <div>
+          <h2 id="listingCtaHeading">Interested in this listing?</h2>
+          <p>Use enquiry support for family/work/travel planning, or continue directly to Airbnb for live pricing and booking.</p>
+        </div>
+        <div class="button-row">
+          <a href="#" class="button button-ghost" id="ctaAirbnbLink" target="_blank" rel="noopener noreferrer">Open on Airbnb</a>
+          <button class="button button-solid" data-enquire="" data-listing-enquire>Enquire Now</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="footer-inner">
+      <div class="footer-grid">
+        <div>
+          <h2 class="footer-brand">URBANIC</h2>
+          <span class="footer-subtitle">stay</span>
+          <p class="footer-note">Trusted Mumbai Airbnb stays with transparent details and thoughtful pre-booking support.</p>
+        </div>
+        <div>
+          <span class="footer-heading">Listings</span>
+          <ul class="footer-list" id="footerListingLinks"></ul>
+        </div>
+        <div>
+          <span class="footer-heading">Explore</span>
+          <ul class="footer-list">
+            <li><a href="index.html#listings">Listings</a></li>
+            <li><a href="index.html#guest-fit">Guest Fit</a></li>
+            <li><a href="index.html#contact">Contact</a></li>
+          </ul>
+        </div>
+        <div>
+          <span class="footer-heading">Contact</span>
+          <ul class="footer-list">
+            <li><a href="mailto:hello@urbanicstay.com">hello@urbanicstay.com</a></li>
+            <li><a href="tel:+919820000000">+91 98200 00000</a></li>
+            <li><a href="#">Instagram</a></li>
+            <li><a href="#">WhatsApp</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>© 2026 Urbanic Stay. All rights reserved.</span>
+        <span>Mumbai, India</span>
+      </div>
+    </div>
+  </footer>
+  <a class="whatsapp-fab" href="https://wa.me/919148975521?text=Hi%20Urbanic%20Stay%2C%20I%20want%20to%20check%20availability." target="_blank" rel="noopener noreferrer" aria-label="Chat on WhatsApp">
+    <span class="whatsapp-fab-icon" aria-hidden="true">
+      <svg viewBox="0 0 16 16" fill="none">
+        <path fill="currentColor" d="M13.601 2.326A7.85 7.85 0 0 0 8.132 0C3.753 0 .19 3.56.19 7.933c0 1.4.366 2.763 1.06 3.965L0 16l4.196-1.102a7.9 7.9 0 0 0 3.933 1.01h.003c4.377 0 7.94-3.558 7.94-7.93A7.9 7.9 0 0 0 13.6 2.326zM8.132 14.542h-.003a6.54 6.54 0 0 1-3.329-.91l-.239-.141-2.49.654.665-2.43-.155-.25a6.54 6.54 0 0 1-1.003-3.489c.002-3.62 2.95-6.565 6.57-6.565a6.52 6.52 0 0 1 4.65 1.928 6.53 6.53 0 0 1 1.92 4.647c-.003 3.62-2.95 6.556-6.57 6.556zm3.593-4.954c-.197-.099-1.17-.578-1.352-.643-.182-.066-.314-.099-.446.099-.132.197-.512.643-.628.775-.116.132-.231.149-.428.05-.197-.1-.832-.306-1.585-.977-.586-.522-.982-1.168-1.097-1.366-.116-.197-.012-.304.087-.402.09-.09.197-.231.296-.347.099-.116.132-.198.198-.33.066-.132.033-.248-.017-.347-.05-.099-.446-1.073-.61-1.47-.16-.386-.323-.334-.446-.34-.116-.006-.248-.007-.38-.007a.73.73 0 0 0-.528.248c-.182.198-.694.677-.694 1.651 0 .975.71 1.916.809 2.048.099.132 1.393 2.128 3.376 2.985.472.204.84.326 1.127.418.473.151.904.13 1.245.079.38-.057 1.17-.479 1.336-.941.165-.462.165-.858.116-.94-.05-.083-.182-.132-.38-.231z"/>
+      </svg>
+    </span>
+    <span class="whatsapp-fab-text">WhatsApp</span>
+  </a>
+
+</div>
+
+<div class="enquiry-modal" id="enquiryModal" hidden>
+  <div class="modal-backdrop"></div>
+  <div class="modal-panel">
+    <div class="modal-header">
+      <div>
+        <span class="eyebrow">Get in Touch</span>
+        <h2 class="modal-title">Enquire Now</h2>
+      </div>
+      <button class="modal-close" id="modalClose" aria-label="Close">&times;</button>
+    </div>
+    <p class="modal-copy">Share your trip details and priorities, and we’ll help you evaluate this listing confidently.</p>
+    <form class="enquiry-form" id="enquiryForm">
+      <div class="form-grid">
+        <div class="field">
+          <label for="fname">Full Name *</label>
+          <input type="text" id="fname" name="name" required>
+        </div>
+        <div class="field">
+          <label for="femail">Email *</label>
+          <input type="email" id="femail" name="email" required>
+        </div>
+        <div class="field">
+          <label for="fphone">Phone</label>
+          <input type="tel" id="fphone" name="phone">
+        </div>
+        <div class="field">
+          <label for="fguests">Guests</label>
+          <select id="fguests" name="guests">
+            <option value="">Select</option>
+            <option>1-2</option>
+            <option>3-4</option>
+            <option>5-6</option>
+            <option>7+</option>
+          </select>
+        </div>
+        <div class="field field-full">
+          <label for="propertyField">Selected Listing</label>
+          <input type="text" id="propertyField" name="property" readonly>
+        </div>
+        <div class="field field-full">
+          <label for="fdates">Approximate Dates</label>
+          <input type="text" id="fdates" name="dates" placeholder="e.g. Mid-January, 5 nights">
+        </div>
+        <div class="field field-full">
+          <label for="fmsg">Message</label>
+          <textarea id="fmsg" name="message" placeholder="Tell us about family needs, work setup, or travel priorities..."></textarea>
+        </div>
+      </div>
+      <button type="submit" class="button button-solid" style="width:100%;margin-top:8px;">Send Enquiry</button>
+      <div class="form-success" id="formSuccess" hidden>
+        ✓ Thank you! We’ll be in touch shortly.
+      </div>
+    </form>
+  </div>
+</div>
+
+<script src="listings-data.js"></script>
+<script src="urbanic.js"></script>
+</body>
+</html>
