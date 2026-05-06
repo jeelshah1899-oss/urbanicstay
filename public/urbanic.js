@@ -519,20 +519,34 @@ if (header) {
 // Mobile nav toggle
 const navToggle = document.querySelector(".nav-toggle");
 const navLinks = document.querySelector(".site-nav-links");
+const NAV_COLLAPSE_WIDTH = 980;
+
+function closeMobileNav() {
+  if (!navToggle || !navLinks) return;
+  navToggle.setAttribute("aria-expanded", "false");
+  navLinks.classList.remove("is-open");
+  document.body.classList.remove("nav-open");
+}
 if (navToggle && navLinks) {
   navToggle.addEventListener("click", () => {
     const expanded = navToggle.getAttribute("aria-expanded") === "true";
-    navToggle.setAttribute("aria-expanded", String(!expanded));
-    navLinks.classList.toggle("is-open", !expanded);
-    document.body.classList.toggle("nav-open", !expanded);
+    if (expanded) {
+      closeMobileNav();
+      return;
+    }
+    navToggle.setAttribute("aria-expanded", "true");
+    navLinks.classList.add("is-open");
+    document.body.classList.add("nav-open");
   });
 
   navLinks.querySelectorAll("a").forEach(link => {
-    link.addEventListener("click", () => {
-      navToggle.setAttribute("aria-expanded", "false");
-      navLinks.classList.remove("is-open");
-      document.body.classList.remove("nav-open");
-    });
+    link.addEventListener("click", closeMobileNav);
+  });
+
+  window.addEventListener("resize", () => {
+    if (window.innerWidth > NAV_COLLAPSE_WIDTH) {
+      closeMobileNav();
+    }
   });
 }
 
@@ -546,6 +560,7 @@ const propertyField = document.getElementById("propertyField");
 
 function openModal(propertyName) {
   if (!modal) return;
+  closeMobileNav();
 
   if (propertyField && propertyName) {
     if (propertyField.tagName === "SELECT") {
