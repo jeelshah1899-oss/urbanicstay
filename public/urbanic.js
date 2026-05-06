@@ -715,7 +715,10 @@ function initializeFadeUp() {
   const fadeElements = document.querySelectorAll(".fade-up");
   if (!fadeElements.length) return;
 
-  if (!("IntersectionObserver" in window)) {
+  // Fallback for mobile or when IntersectionObserver is unsupported
+  const isMobile = window.innerWidth <= 980;
+  if (!("IntersectionObserver" in window) || isMobile) {
+    // Immediately reveal all fade-up elements on mobile for reliability
     fadeElements.forEach(element => element.classList.add("is-visible"));
     return;
   }
@@ -726,13 +729,36 @@ function initializeFadeUp() {
       entry.target.classList.add("is-visible");
       observer.unobserve(entry.target);
     });
-  }, { threshold: 0.15 });
+  }, { threshold: 0.1, rootMargin: "50px" });
 
   fadeElements.forEach(element => observer.observe(element));
+
+  // Fallback: ensure elements become visible after timeout (in case observer fails)
+  setTimeout(() => {
+    fadeElements.forEach(element => {
+      if (!element.classList.contains("is-visible")) {
+        element.classList.add("is-visible");
+      }
+    });
+  }, 2000);
 }
 
-updateListingCounts();
-renderFooterListingLinks();
-renderHomeListings();
-renderListingPage();
-initializeFadeUp();
+// Initialize content and fade animations
+function initializeContent() {
+  updateListingCounts();
+  renderFooterListingLinks();
+  renderHomeListings();
+  renderListingPage();
+  
+  // Small delay to ensure DOM is painted before observing
+  requestAnimationFrame(() => {
+    initializeFadeUp();
+  });
+}
+
+// Run initialization when DOM is ready
+if (document.readyState === "loading") {
+  document.addEventListener("DOMContentLoaded", initializeContent);
+} else {
+  initializeContent();
+}

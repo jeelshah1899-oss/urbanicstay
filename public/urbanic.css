@@ -1354,9 +1354,20 @@ summary:focus-visible {
               transform 0.8s cubic-bezier(0.23, 1, 0.32, 1);
 }
 
-.fade-up.is-visible {
+.fade-up.is-visible,
+.fade-up.is-visible .listing-card,
+.fade-up.is-visible .listing-featured {
   opacity: 1;
   transform: translateY(0);
+}
+
+/* Ensure dynamically injected listing cards are visible */
+.listing-card,
+.listing-featured,
+#featuredListing,
+#listingGrid {
+  opacity: 1 !important;
+  visibility: visible !important;
 }
 
 /* Staggered animations for grid children */
@@ -2625,9 +2636,36 @@ summary:focus-visible {
     display: none;
   }
 
-  .fade-up {
+  .fade-up,
+  .fade-up .listing-card,
+  .fade-up .listing-featured {
     opacity: 1;
     transform: none;
+  }
+}
+
+/* Mobile visibility fallback - ensure content shows on devices that may have JS timing issues */
+@media (max-width: 980px) {
+  .listing-grid,
+  .listing-featured,
+  #listingGrid,
+  #featuredListing,
+  .listing-card {
+    opacity: 1 !important;
+    visibility: visible !important;
+    transform: none !important;
+  }
+  
+  /* Ensure fade-up elements on mobile are visible after a brief delay */
+  .fade-up {
+    animation: mobileReveal 0.5s ease 0.3s forwards;
+  }
+  
+  @keyframes mobileReveal {
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
   }
 }
 
