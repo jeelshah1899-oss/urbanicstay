@@ -256,6 +256,8 @@
   --radius-md: 20px;
   --radius-sm: 14px;
   --container: min(1180px, calc(100vw - 40px));
+  --header-offset: clamp(88px, 11vw, 122px);
+  --mobile-nav-top: 92px;
 }
 
 *,
@@ -266,6 +268,8 @@
 
 html {
   scroll-behavior: smooth;
+  scroll-padding-top: var(--header-offset);
+  -webkit-text-size-adjust: 100%;
 }
 
 body {
@@ -276,8 +280,8 @@ body {
     linear-gradient(180deg, #1b2515 0%, var(--bg) 24%, var(--bg-deep) 100%);
   color: var(--text);
   min-height: 100vh;
+  overflow-x: hidden;
   overflow-x: clip;
-  -webkit-text-size-adjust: 100%;
 }
 
 body::before {
@@ -294,6 +298,8 @@ body::before {
 body.modal-open,
 body.nav-open {
   overflow: hidden;
+  overscroll-behavior: none;
+  touch-action: none;
 }
 
 a {
@@ -310,6 +316,7 @@ textarea {
 
 img {
   max-width: 100%;
+  height: auto;
   display: block;
 }
 
@@ -341,7 +348,7 @@ img {
 #contact,
 #faq,
 #gallery {
-  scroll-margin-top: 122px;
+  scroll-margin-top: var(--header-offset);
 }
 
 .eyebrow {
@@ -407,6 +414,7 @@ img {
   align-items: center;
   justify-content: center;
   gap: 10px;
+  min-height: 44px;
   padding: 14px 22px;
   border-radius: 999px;
   border: 1px solid transparent;
@@ -415,7 +423,18 @@ img {
   font-size: 0.76rem;
   font-weight: 500;
   cursor: pointer;
+  touch-action: manipulation;
   transition: transform 0.3s ease, background 0.3s ease, border-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
+}
+
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible,
+summary:focus-visible {
+  outline: 2px solid var(--accent-bright);
+  outline-offset: 2px;
 }
 
 .button:hover {
@@ -462,7 +481,7 @@ img {
   top: 0;
   z-index: 20;
   backdrop-filter: blur(14px);
-  padding: 14px 0 0;
+  padding: calc(14px + env(safe-area-inset-top)) 0 0;
 }
 
 .site-header.is-scrolled {
@@ -539,7 +558,7 @@ img {
 .site-nav-links a {
   display: inline-flex;
   align-items: center;
-  min-height: 36px;
+  min-height: 44px;
   padding: 0 14px;
   border-radius: 999px;
   font-size: 0.8rem;
@@ -1715,6 +1734,10 @@ img {
   position: fixed;
   inset: 0;
   z-index: 60;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 0 12px;
 }
 
 .modal-backdrop {
@@ -1734,7 +1757,10 @@ img {
   padding: 28px;
   box-shadow: var(--shadow);
   max-height: calc(100vh - 96px);
+  max-height: calc(100dvh - 96px);
   overflow-y: auto;
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
 }
 
 .modal-header {
@@ -1909,7 +1935,7 @@ img {
 
 @media (max-width: 980px) {
   .site-header {
-    padding-top: 10px;
+    padding-top: calc(10px + env(safe-area-inset-top));
   }
 
   .site-header-inner {
@@ -1936,7 +1962,7 @@ img {
 
   .site-nav-links {
     position: fixed;
-    top: 92px;
+    top: calc(var(--mobile-nav-top) + env(safe-area-inset-top));
     left: 16px;
     right: 16px;
     display: none;
@@ -1944,12 +1970,13 @@ img {
     align-items: stretch;
     gap: 14px;
     padding: 20px;
+    padding-bottom: max(20px, calc(20px + env(safe-area-inset-bottom)));
     background: rgba(16, 23, 13, 0.98);
     border: 1px solid var(--line);
     border-radius: 22px;
     box-shadow: var(--shadow);
     z-index: 100;
-    max-height: calc(100dvh - 108px);
+    max-height: calc(100dvh - (var(--mobile-nav-top) + env(safe-area-inset-top) + 16px));
     overflow-y: auto;
     overscroll-behavior: contain;
   }
@@ -1978,6 +2005,7 @@ img {
 @media (max-width: 820px) {
   :root {
     --container: min(1180px, calc(100vw - 32px));
+    --header-offset: 112px;
   }
 
   .site-header-inner {
@@ -2053,10 +2081,12 @@ img {
     --radius-lg: 22px;
     --radius-md: 16px;
     --radius-sm: 10px;
+    --header-offset: 102px;
+    --mobile-nav-top: 82px;
   }
 
   .site-header {
-    padding-top: 8px;
+    padding-top: calc(8px + env(safe-area-inset-top));
   }
 
   .site-header-inner {
@@ -2066,12 +2096,13 @@ img {
   }
 
   .site-nav-links {
-    top: 82px;
+    top: calc(var(--mobile-nav-top) + env(safe-area-inset-top));
     left: 12px;
     right: 12px;
     padding: 18px;
+    padding-bottom: max(18px, calc(18px + env(safe-area-inset-bottom)));
     border-radius: 18px;
-    max-height: calc(100dvh - 94px);
+    max-height: calc(100dvh - (var(--mobile-nav-top) + env(safe-area-inset-top) + 12px));
   }
 
   .stats-grid,
@@ -2406,14 +2437,18 @@ img {
 
   /* Modal mobile styles */
   .enquiry-modal {
-    padding: 16px;
+    padding: max(12px, calc(12px + env(safe-area-inset-top))) 12px max(12px, calc(12px + env(safe-area-inset-bottom)));
     align-items: flex-end;
+    justify-content: center;
   }
 
   .modal-panel {
+    width: 100%;
+    margin: 0;
     padding: 24px 18px;
     border-radius: 24px 24px 8px 8px;
-    max-height: 90vh;
+    max-height: calc(100vh - 24px);
+    max-height: calc(100dvh - (24px + env(safe-area-inset-top) + env(safe-area-inset-bottom)));
     overflow-y: auto;
     -webkit-overflow-scrolling: touch;
   }
@@ -2480,10 +2515,11 @@ img {
 @media (max-width: 380px) {
   :root {
     --container: min(1180px, calc(100vw - 20px));
+    --header-offset: 96px;
+    --mobile-nav-top: 76px;
   }
 
   .site-nav-links {
-    top: 76px;
     left: 10px;
     right: 10px;
     padding: 16px;
@@ -2572,6 +2608,29 @@ img {
   }
 }
 
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+
+  .preloader {
+    display: none;
+  }
+
+  .fade-up {
+    opacity: 1;
+    transform: none;
+  }
+}
+
 /* Touch-friendly improvements */
 @media (hover: none) and (pointer: coarse) {
   .stat-card:hover,
@@ -2586,6 +2645,11 @@ img {
 
   .button:hover {
     transform: none;
+  }
+
+  .site-nav-links a,
+  .modal-close {
+    min-height: 44px;
   }
 
   .brand:hover {
@@ -2641,6 +2705,7 @@ img {
 
   .modal-panel {
     max-height: 95vh;
+    max-height: 95dvh;
   }
 }
 
@@ -2664,7 +2729,7 @@ img {
 .whatsapp-fab {
   position: fixed;
   right: clamp(14px, 2.4vw, 28px);
-  bottom: max(14px, env(safe-area-inset-bottom));
+  bottom: calc(14px + env(safe-area-inset-bottom));
   z-index: 48;
   display: inline-flex;
   align-items: center;
@@ -2720,7 +2785,7 @@ body.modal-open .whatsapp-fab {
     justify-content: center;
     padding: 0;
     right: 12px;
-    bottom: max(12px, env(safe-area-inset-bottom));
+    bottom: calc(12px + env(safe-area-inset-bottom));
   }
 
   .whatsapp-fab-icon {

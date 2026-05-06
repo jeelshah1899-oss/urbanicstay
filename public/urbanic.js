@@ -2,6 +2,7 @@ const listings = Array.isArray(window.URBANIC_LISTINGS) ? window.URBANIC_LISTING
 const compareSelection = new Set();
 const COMPARE_LIMIT = 3;
 let compareNotice = "";
+const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
 function escapeHtml(value) {
   return String(value || "")
@@ -202,7 +203,7 @@ function renderHomeListings() {
   if (featured) {
     featured.innerHTML = `
       <div class="listing-featured-media">
-        <img src="${escapeHtml(featuredListing.images[0].url)}" alt="${escapeHtml(featuredListing.title)} cover image">
+        <img src="${escapeHtml(featuredListing.images[0].url)}" alt="${escapeHtml(featuredListing.title)} cover image" loading="eager" decoding="async" fetchpriority="high">
       </div>
       <div class="listing-featured-copy">
         <span class="listing-area">${escapeHtml(featuredListing.locationLabel)}</span>
@@ -225,7 +226,7 @@ function renderHomeListings() {
     return `
       <article class="listing-card fade-up">
         <div class="listing-media">
-          <img src="${escapeHtml(listing.images[0].url)}" alt="${escapeHtml(listing.title)} cover image">
+          <img src="${escapeHtml(listing.images[0].url)}" alt="${escapeHtml(listing.title)} cover image" loading="lazy" decoding="async">
         </div>
         <div class="listing-copy">
           <span class="listing-area">${escapeHtml(listing.locationLabel)}</span>
@@ -248,10 +249,13 @@ function renderHomeListings() {
   populatePropertyField();
 }
 
-function setImage(el, image, fallbackTitle) {
+function setImage(el, image, fallbackTitle, options = {}) {
   if (!el || !image) return;
   el.src = image.url;
   el.alt = image.label || `${fallbackTitle} image`;
+  if (options.loading) el.loading = options.loading;
+  if (options.decoding) el.decoding = options.decoding;
+  if (options.fetchPriority) el.fetchPriority = options.fetchPriority;
 }
 
 function buildFaqItems(listing) {
@@ -440,7 +444,7 @@ function renderListingPage() {
   if (galleryEl) {
     galleryEl.innerHTML = listing.images.map(image => `
       <div class="gallery-card">
-        <img src="${escapeHtml(image.url)}" alt="${escapeHtml(image.label)}">
+        <img src="${escapeHtml(image.url)}" alt="${escapeHtml(image.label)}" loading="lazy" decoding="async">
         <span>${escapeHtml(image.label)}</span>
       </div>
     `).join("");
@@ -463,9 +467,9 @@ function renderListingPage() {
   if (heroPanel && listing.images[0]) {
     heroPanel.style.backgroundImage = `linear-gradient(130deg, rgba(18,26,13,0.92), rgba(18,26,13,0.68)), url('${listing.images[0].url}')`;
   }
-  setImage(heroImageMain, listing.images[0], listing.title);
-  setImage(heroImageOne, listing.images[1] || listing.images[0], listing.title);
-  setImage(heroImageTwo, listing.images[2] || listing.images[0], listing.title);
+  setImage(heroImageMain, listing.images[0], listing.title, { loading: "eager", decoding: "async", fetchPriority: "high" });
+  setImage(heroImageOne, listing.images[1] || listing.images[0], listing.title, { loading: "lazy", decoding: "async", fetchPriority: "low" });
+  setImage(heroImageTwo, listing.images[2] || listing.images[0], listing.title, { loading: "lazy", decoding: "async", fetchPriority: "low" });
 
   document.querySelectorAll("[data-listing-enquire]").forEach(button => {
     button.setAttribute("data-enquire", listing.title);
@@ -511,36 +515,53 @@ if (preloader) {
 // Header scroll effect
 const header = document.querySelector(".site-header");
 if (header) {
-  window.addEventListener("scroll", () => {
+  let isScrollTicking = false;
+  const updateHeaderState = () => {
     header.classList.toggle("is-scrolled", window.scrollY > 40);
-  });
+    isScrollTicking = false;
+  };
+
+  window.addEventListener("scroll", () => {
+    if (isScrollTicking) return;
+    isScrollTicking = true;
+    window.requestAnimationFrame(updateHeaderState);
+  }, { passive: true });
+
+  updateHeaderState();
 }
 
 // Mobile nav toggle
 const navToggle = document.querySelector(".nav-toggle");
 const navLinks = document.querySelector(".site-nav-links");
 const NAV_COLLAPSE_WIDTH = 980;
+function setMobileNavState(isOpen) {
+  if (!navToggle || !navLinks) return;
+  navToggle.setAttribute("aria-expanded", String(isOpen));
+  navLinks.classList.toggle("is-open", isOpen);
+  navLinks.setAttribute("aria-hidden", String(!isOpen));
+  document.body.classList.toggle("nav-open", isOpen);
+}
 
 function closeMobileNav() {
   if (!navToggle || !navLinks) return;
-  navToggle.setAttribute("aria-expanded", "false");
-  navLinks.classList.remove("is-open");
-  document.body.classList.remove("nav-open");
+  setMobileNavState(false);
 }
 if (navToggle && navLinks) {
+  setMobileNavState(false);
   navToggle.addEventListener("click", () => {
-    const expanded = navToggle.getAttribute("aria-expanded") === "true";
-    if (expanded) {
-      closeMobileNav();
-      return;
-    }
-    navToggle.setAttribute("aria-expanded", "true");
-    navLinks.classList.add("is-open");
-    document.body.classList.add("nav-open");
+    const isOpen = navToggle.getAttribute("aria-expanded") === "true";
+    setMobileNavState(!isOpen);
   });
 
   navLinks.querySelectorAll("a").forEach(link => {
     link.addEventListener("click", closeMobileNav);
+  });
+
+  document.addEventListener("click", event => {
+    if (!navLinks.classList.contains("is-open")) return;
+    const target = event.target instanceof Element ? event.target : null;
+    if (!target || target.closest(".site-nav")) return;
+    closeMobileNav();
   });
 
   window.addEventListener("resize", () => {
@@ -548,6 +569,8 @@ if (navToggle && navLinks) {
       closeMobileNav();
     }
   });
+
+  window.addEventListener("orientationchange", closeMobileNav);
 }
 
 // Enquiry modal
@@ -557,6 +580,18 @@ const modalBackdrop = document.querySelector(".modal-backdrop");
 const enquiryForm = document.getElementById("enquiryForm");
 const formSuccess = document.getElementById("formSuccess");
 const propertyField = document.getElementById("propertyField");
+const MODAL_FOCUSABLE_SELECTOR = 'a[href], button:not([disabled]), textarea:not([disabled]), input:not([disabled]), select:not([disabled]), [tabindex]:not([tabindex="-1"])';
+let modalPreviouslyFocusedElement = null;
+
+function getModalFocusableElements() {
+  if (!modal) return [];
+  return Array.from(modal.querySelectorAll(MODAL_FOCUSABLE_SELECTOR)).filter(element => {
+    if (!(element instanceof HTMLElement)) return false;
+    if (element.hasAttribute("hidden")) return false;
+    if (element.getAttribute("aria-hidden") === "true") return false;
+    return true;
+  });
+}
 
 function openModal(propertyName) {
   if (!modal) return;
@@ -570,14 +605,22 @@ function openModal(propertyName) {
       propertyField.value = propertyName;
     }
   }
+  modalPreviouslyFocusedElement = document.activeElement instanceof HTMLElement ? document.activeElement : null;
 
   modal.hidden = false;
+  modal.setAttribute("aria-hidden", "false");
   document.body.classList.add("modal-open");
+
+  const [firstFocusable] = getModalFocusableElements();
+  if (firstFocusable && typeof firstFocusable.focus === "function") {
+    firstFocusable.focus({ preventScroll: true });
+  }
 }
 
 function closeModal() {
   if (!modal) return;
   modal.hidden = true;
+  modal.setAttribute("aria-hidden", "true");
   document.body.classList.remove("modal-open");
 
   if (enquiryForm) enquiryForm.reset();
@@ -585,17 +628,48 @@ function closeModal() {
   if (propertyField && propertyField.tagName !== "SELECT" && propertyField.dataset.defaultValue) {
     propertyField.value = propertyField.dataset.defaultValue;
   }
+
+  if (modalPreviouslyFocusedElement && typeof modalPreviouslyFocusedElement.focus === "function") {
+    modalPreviouslyFocusedElement.focus({ preventScroll: true });
+  }
+  modalPreviouslyFocusedElement = null;
 }
 
 if (modalClose) modalClose.addEventListener("click", closeModal);
 if (modalBackdrop) modalBackdrop.addEventListener("click", closeModal);
 
 document.addEventListener("keydown", event => {
-  if (event.key === "Escape" && modal && !modal.hidden) closeModal();
+  if (event.key === "Escape") {
+    if (modal && !modal.hidden) {
+      closeModal();
+      return;
+    }
+    closeMobileNav();
+    return;
+  }
+
+  if (event.key === "Tab" && modal && !modal.hidden) {
+    const focusableElements = getModalFocusableElements();
+    if (!focusableElements.length) return;
+
+    const firstFocusable = focusableElements[0];
+    const lastFocusable = focusableElements[focusableElements.length - 1];
+    const activeElement = document.activeElement;
+
+    if (event.shiftKey && activeElement === firstFocusable) {
+      event.preventDefault();
+      lastFocusable.focus();
+    } else if (!event.shiftKey && activeElement === lastFocusable) {
+      event.preventDefault();
+      firstFocusable.focus();
+    }
+  }
 });
 
 document.addEventListener("click", event => {
-  const button = event.target.closest("[data-enquire]");
+  const target = event.target instanceof Element ? event.target : null;
+  if (!target) return;
+  const button = target.closest("[data-enquire]");
   if (!button) return;
   event.preventDefault();
   openModal(button.dataset.enquire || "");
@@ -625,6 +699,7 @@ if (enquiryForm) {
 }
 
 // Smooth scrolling for hash links
+const hashScrollBehavior = prefersReducedMotion ? "auto" : "smooth";
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
   anchor.addEventListener("click", event => {
     const hash = anchor.getAttribute("href");
@@ -632,7 +707,7 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     const target = document.querySelector(hash);
     if (!target) return;
     event.preventDefault();
-    target.scrollIntoView({ behavior: "smooth", block: "start" });
+    target.scrollIntoView({ behavior: hashScrollBehavior, block: "start" });
   });
 });
 

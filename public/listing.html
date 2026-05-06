@@ -2,9 +2,10 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <title>Listing Details — Urbanic Stay</title>
   <meta name="description" content="Detailed Urbanic Stay listing pages with transparent guest info, trust signals, and direct Airbnb booking links.">
+  <meta name="theme-color" content="#10170d">
   <link rel="stylesheet" href="urbanic.css">
 </head>
 <body data-page="listing">
@@ -53,13 +54,13 @@
         </div>
       </a>
       <nav class="site-nav">
-        <div class="site-nav-links">
+        <div class="site-nav-links" id="primaryNavigation" aria-hidden="true">
           <a href="index.html#listings">Listings</a>
           <a href="index.html#guest-fit">Guest Fit</a>
           <a href="index.html#contact">Contact</a>
         </div>
-        <button class="button button-solid" data-enquire="">Enquire Now</button>
-        <button class="nav-toggle" aria-expanded="false" aria-label="Menu"><span></span></button>
+        <button class="button button-solid" type="button" data-enquire="">Enquire Now</button>
+        <button class="nav-toggle" type="button" aria-controls="primaryNavigation" aria-expanded="false" aria-label="Open menu"><span></span></button>
       </nav>
     </div>
   </header>
@@ -77,21 +78,21 @@
           <div class="listing-meta" style="margin-top:24px;" id="listingMeta"></div>
           <div class="listing-trust-inline" id="listingTrustSignals"></div>
           <div class="listing-actions" style="margin-top:28px;">
-            <button class="button button-solid" data-enquire="" data-listing-enquire>Enquire Now</button>
+            <button class="button button-solid" type="button" data-enquire="" data-listing-enquire>Enquire Now</button>
             <a href="#" class="button button-ghost" id="primaryAirbnbLink" target="_blank" rel="noopener noreferrer">View on Airbnb</a>
             <a href="#gallery" class="button button-ghost">View Gallery</a>
           </div>
         </div>
         <div class="listing-visual-stack">
           <div class="listing-visual-main">
-            <img id="heroImageMain" src="" alt="">
+            <img id="heroImageMain" src="" alt="" decoding="async" fetchpriority="high">
           </div>
           <div class="listing-visual-column">
             <div class="listing-visual-small">
-              <img id="heroImageOne" src="" alt="">
+              <img id="heroImageOne" src="" alt="" loading="lazy" decoding="async">
             </div>
             <div class="listing-visual-small">
-              <img id="heroImageTwo" src="" alt="">
+              <img id="heroImageTwo" src="" alt="" loading="lazy" decoding="async">
             </div>
           </div>
         </div>
@@ -169,7 +170,7 @@
           <div class="accent-line" style="margin:24px 0;"></div>
           <h3>Need a fit check?</h3>
           <p>Tell us if you’re traveling with kids, working remotely, or planning group logistics, and we’ll help you evaluate the right listing.</p>
-          <button class="button button-solid" style="width:100%;margin-top:18px;" data-enquire="" data-listing-enquire>Enquire Now</button>
+          <button class="button button-solid" type="button" style="width:100%;margin-top:18px;" data-enquire="" data-listing-enquire>Enquire Now</button>
         </aside>
       </div>
     </div>
@@ -192,7 +193,7 @@
         </div>
         <div class="button-row">
           <a href="#" class="button button-ghost" id="ctaAirbnbLink" target="_blank" rel="noopener noreferrer">Open on Airbnb</a>
-          <button class="button button-solid" data-enquire="" data-listing-enquire>Enquire Now</button>
+          <button class="button button-solid" type="button" data-enquire="" data-listing-enquire>Enquire Now</button>
         </div>
       </div>
     </div>
@@ -245,30 +246,30 @@
 
 </div>
 
-<div class="enquiry-modal" id="enquiryModal" hidden>
+<div class="enquiry-modal" id="enquiryModal" hidden aria-hidden="true">
   <div class="modal-backdrop"></div>
-  <div class="modal-panel">
+  <div class="modal-panel" role="dialog" aria-modal="true" aria-labelledby="enquiryModalTitle">
     <div class="modal-header">
       <div>
         <span class="eyebrow">Get in Touch</span>
-        <h2 class="modal-title">Enquire Now</h2>
+        <h2 class="modal-title" id="enquiryModalTitle">Enquire Now</h2>
       </div>
-      <button class="modal-close" id="modalClose" aria-label="Close">&times;</button>
+      <button class="modal-close" id="modalClose" type="button" aria-label="Close enquiry form">&times;</button>
     </div>
     <p class="modal-copy">Share your trip details and priorities, and we’ll help you evaluate this listing confidently.</p>
     <form class="enquiry-form" id="enquiryForm">
       <div class="form-grid">
         <div class="field">
           <label for="fname">Full Name *</label>
-          <input type="text" id="fname" name="name" required>
+          <input type="text" id="fname" name="name" autocomplete="name" required>
         </div>
         <div class="field">
           <label for="femail">Email *</label>
-          <input type="email" id="femail" name="email" required>
+          <input type="email" id="femail" name="email" autocomplete="email" required>
         </div>
         <div class="field">
           <label for="fphone">Phone</label>
-          <input type="tel" id="fphone" name="phone">
+          <input type="tel" id="fphone" name="phone" inputmode="tel" autocomplete="tel">
         </div>
         <div class="field">
           <label for="fguests">Guests</label>
@@ -286,7 +287,7 @@
         </div>
         <div class="field field-full">
           <label for="fdates">Approximate Dates</label>
-          <input type="text" id="fdates" name="dates" placeholder="e.g. Mid-January, 5 nights">
+          <input type="text" id="fdates" name="dates" autocomplete="off" placeholder="e.g. Mid-January, 5 nights">
         </div>
         <div class="field field-full">
           <label for="fmsg">Message</label>
@@ -294,7 +295,7 @@
         </div>
       </div>
       <button type="submit" class="button button-solid" style="width:100%;margin-top:8px;">Send Enquiry</button>
-      <div class="form-success" id="formSuccess" hidden>
+      <div class="form-success" id="formSuccess" role="status" aria-live="polite" hidden>
         ✓ Thank you! We’ll be in touch shortly.
       </div>
     </form>
