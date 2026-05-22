@@ -580,8 +580,26 @@ const modalBackdrop = document.querySelector(".modal-backdrop");
 const enquiryForm = document.getElementById("enquiryForm");
 const formSuccess = document.getElementById("formSuccess");
 const propertyField = document.getElementById("propertyField");
+const WHATSAPP_SUBMIT_ENDPOINT = "/api/whatsapp-enquiry";
+const defaultFormStatusMessage = formSuccess ? formSuccess.textContent.trim() : "";
 const MODAL_FOCUSABLE_SELECTOR = 'a[href], button:not([disabled]), textarea:not([disabled]), input:not([disabled]), select:not([disabled]), [tabindex]:not([tabindex="-1"])';
 let modalPreviouslyFocusedElement = null;
+
+function setFormStatus(message, isError = false) {
+  if (!formSuccess) return;
+  formSuccess.hidden = false;
+  formSuccess.classList.toggle("is-error", isError);
+  formSuccess.textContent = message || defaultFormStatusMessage;
+}
+
+function resetFormStatus() {
+  if (!formSuccess) return;
+  formSuccess.hidden = true;
+  formSuccess.classList.remove("is-error");
+  if (defaultFormStatusMessage) {
+    formSuccess.textContent = defaultFormStatusMessage;
+  }
+}
 
 function getModalFocusableElements() {
   if (!modal) return [];
@@ -596,6 +614,7 @@ function getModalFocusableElements() {
 function openModal(propertyName) {
   if (!modal) return;
   closeMobileNav();
+  resetFormStatus();
 
   if (propertyField && propertyName) {
     if (propertyField.tagName === "SELECT") {
@@ -624,7 +643,7 @@ function closeModal() {
   document.body.classList.remove("modal-open");
 
   if (enquiryForm) enquiryForm.reset();
-  if (formSuccess) formSuccess.hidden = true;
+  resetFormStatus();
   if (propertyField && propertyField.tagName !== "SELECT" && propertyField.dataset.defaultValue) {
     propertyField.value = propertyField.dataset.defaultValue;
   }
@@ -676,25 +695,57 @@ document.addEventListener("click", event => {
 });
 
 if (enquiryForm) {
-  enquiryForm.addEventListener("submit", event => {
+  enquiryForm.addEventListener("submit", async event => {
     event.preventDefault();
     const submitButton = enquiryForm.querySelector('button[type="submit"]');
+    const originalSubmitLabel = submitButton ? submitButton.textContent : "Send Enquiry";
+    resetFormStatus();
+
     if (submitButton) {
       submitButton.disabled = true;
       submitButton.textContent = "Sending...";
     }
 
-    setTimeout(() => {
-      enquiryForm.reset();
-      if (formSuccess) formSuccess.hidden = false;
-      if (submitButton) {
-        submitButton.disabled = false;
-        submitButton.textContent = "Send Enquiry";
+    const formData = new FormData(enquiryForm);
+    const payload = {
+      name: String(formData.get("name") || "").trim(),
+      email: String(formData.get("email") || "").trim(),
+      phone: String(formData.get("phone") || "").trim(),
+      guests: String(formData.get("guests") || "").trim(),
+      property: String(formData.get("property") || "").trim(),
+      dates: String(formData.get("dates") || "").trim(),
+      message: String(formData.get("message") || "").trim(),
+      sourcePage: document.body?.dataset?.page || "unknown",
+      submittedAt: new Date().toISOString()
+    };
+
+    try {
+      const response = await fetch(WHATSAPP_SUBMIT_ENDPOINT, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(payload)
+      });
+
+      const result = await response.json().catch(() => null);
+      if (!response.ok || !result?.ok) {
+        throw new Error(result?.error || "Unable to send enquiry to WhatsApp.");
       }
+
+      enquiryForm.reset();
       if (propertyField && propertyField.tagName !== "SELECT" && propertyField.dataset.defaultValue) {
         propertyField.value = propertyField.dataset.defaultValue;
       }
-    }, 1200);
+      setFormStatus("✓ Thank you! We received your enquiry on WhatsApp and will be in touch shortly.");
+    } catch (error) {
+      setFormStatus("We couldn't send your enquiry right now. Please try again in a moment.", true);
+    } finally {
+      if (submitButton) {
+        submitButton.disabled = false;
+        submitButton.textContent = originalSubmitLabel || "Send Enquiry";
+      }
+    }
   });
 }
 

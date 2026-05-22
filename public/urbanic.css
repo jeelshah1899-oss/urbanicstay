@@ -1879,6 +1879,12 @@ summary:focus-visible {
   color: var(--accent-bright);
 }
 
+.form-success.is-error {
+  border-color: rgba(238, 116, 116, 0.5);
+  background: rgba(238, 116, 116, 0.12);
+  color: #ffd7d7;
+}
+
 [hidden] {
   display: none !important;
 }

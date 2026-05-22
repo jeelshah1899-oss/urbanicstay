@@ -402,5 +402,63 @@ window.URBANIC_LISTINGS = [
       { url: "https://a0.muscache.com/im/pictures/hosting/Hosting-1496990594218609503/original/280a618d-cc77-4007-babf-dab3f1f2e59f.jpeg", label: "Timeless Heritage (3.5 bhk) - Photo 7" },
       { url: "https://a0.muscache.com/im/pictures/hosting/Hosting-1496990594218609503/original/51023ed9-58e4-43c7-8010-43d55b494785.jpeg", label: "Timeless Heritage (3.5 bhk) - Photo 8" }
     ]
+  },
+  {
+    id: "1673961045244312975",
+    slug: "boho-2bhk-apartment-with-garden-view",
+    featured: false,
+    title: "Boho 2BHK Apartment with Garden view",
+    locationLabel: "Entire rental unit in Mumbai, India",
+    propertyType: "Entire rental unit",
+    description: "A boho-style 2BHK with a garden view, designed for guests who want a calm, comfortable Mumbai base for short or extended stays.",
+    details: {
+      guests: "4 guests",
+      bedrooms: "2 bedrooms",
+      beds: "3 beds",
+      bathrooms: "2 private bathrooms"
+    },
+    trust: {
+      rating: null,
+      reviewCount: 0,
+      responseTime: "Responds within an hour",
+      isNew: true
+    },
+    policies: {
+      checkIn: "Check-in timing is shown in the listing rules on Airbnb before confirmation.",
+      maxGuests: "4 guests maximum",
+      cancellation: "Cancellation policy is host-defined and shown on Airbnb before payment.",
+      safety: ["Carbon monoxide alarm not reported", "Smoke alarm not reported"]
+    },
+    locationContext: {
+      airport: "Airport commute details are provided on Airbnb.",
+      metro: "Metro access and transit details are provided on Airbnb.",
+      businessHub: "Business-district travel context is provided on Airbnb."
+    },
+    hotspots: [
+      "Garden-view ambience with relaxed interiors",
+      "Suitable for family, couple, or small-group stays",
+      "Well-positioned for app-based cab movement across the city"
+    ],
+    coordinates: {
+      lat: 19.139053337459764,
+      lng: 72.81533730533485
+    },
+    highlights: [
+      "Entire rental unit in Mumbai",
+      "Suitable for 4 guests",
+      "2 bedrooms • 3 beds • 2 private bathrooms"
+    ],
+    airbnbUrl: "https://www.airbnb.co.in/rooms/1673961045244312975?guests=1&adults=1&s=67&unique_share_id=75b94f90-3f71-4d76-bec5-7ac9cda278a2",
+    photoTourUrl: "https://www.airbnb.co.in/rooms/1673961045244312975?guests=1&adults=1&s=67&unique_share_id=75b94f90-3f71-4d76-bec5-7ac9cda278a2&modal=PHOTO_TOUR_SCROLLABLE",
+    images: [
+      { url: "https://a0.muscache.com/im/pictures/hosting/Hosting-1673961045244312975/original/f97bbd1c-af7e-4594-888f-7e3e82602311.jpeg", label: "Boho 2BHK Apartment with Garden view - Photo 1" },
+      { url: "https://a0.muscache.com/im/pictures/hosting/Hosting-1673961045244312975/original/45fb97fe-3f1a-4e75-a03d-9018d54319e4.jpeg", label: "Boho 2BHK Apartment with Garden view - Photo 2" },
+      { url: "https://a0.muscache.com/im/pictures/hosting/Hosting-1673961045244312975/original/da9cea40-b426-4515-9917-6e32f0c3c06f.jpeg", label: "Boho 2BHK Apartment with Garden view - Photo 3" },
+      { url: "https://a0.muscache.com/im/pictures/hosting/Hosting-1673961045244312975/original/16c9fec2-de71-49b0-89e4-4890b2498ae6.jpeg", label: "Boho 2BHK Apartment with Garden view - Photo 4" },
+      { url: "https://a0.muscache.com/im/pictures/hosting/Hosting-1673961045244312975/original/fcb8ae98-adfe-49a0-b548-ddfefb4fb534.jpeg", label: "Boho 2BHK Apartment with Garden view - Photo 5" },
+      { url: "https://a0.muscache.com/im/pictures/hosting/Hosting-1673961045244312975/original/b38de52a-7149-44c2-a12f-297d1a33d4ef.jpeg", label: "Boho 2BHK Apartment with Garden view - Photo 6" },
+      { url: "https://a0.muscache.com/im/pictures/hosting/Hosting-1673961045244312975/original/1cdaa1c8-2ffb-44ae-aa85-b95f12e6b740.jpeg", label: "Boho 2BHK Apartment with Garden view - Photo 7" },
+      { url: "https://a0.muscache.com/im/pictures/hosting/Hosting-1673961045244312975/original/f851538f-e5fa-4e44-837c-6603f393e540.jpeg", label: "Boho 2BHK Apartment with Garden view - Photo 8" }
+    ]
   }
 ];
