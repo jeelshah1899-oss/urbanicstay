@@ -1,4 +1,6 @@
-const listings = Array.isArray(window.URBANIC_LISTINGS) ? window.URBANIC_LISTINGS : [];
+const listings = Array.isArray(window.URBANIC_LISTINGS)
+  ? window.URBANIC_LISTINGS.filter(listing => !listing.hidden)
+  : [];
 const compareSelection = new Set();
 const COMPARE_LIMIT = 3;
 let compareNotice = "";

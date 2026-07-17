@@ -118,6 +118,7 @@ window.URBANIC_LISTINGS = [
   {
     id: "1099932460926910876",
     slug: "3bhk-apartment-mumbai",
+    hidden: true,
     featured: false,
     title: "3BHK Apartment in Mumbai",
     locationLabel: "Entire rental unit in Mumbai, India",
@@ -176,6 +177,7 @@ window.URBANIC_LISTINGS = [
   {
     id: "1136361221910488091",
     slug: "spacious-4bhk-apartment-near-airport",
+    hidden: true,
     featured: true,
     title: "Spacious 4BHK Apartment near Mumbai airport",
     locationLabel: "Entire rental unit in Mumbai, India",
@@ -233,6 +235,7 @@ window.URBANIC_LISTINGS = [
   {
     id: "1139209323461405033",
     slug: "2bhk-near-international-airport",
+    hidden: true,
     featured: false,
     title: "2 bhk near international airport",
     locationLabel: "Room in Mumbai, India",
@@ -291,6 +294,7 @@ window.URBANIC_LISTINGS = [
   {
     id: "1176611231170019401",
     slug: "spacious-house-andheri-west-3bhk",
+    hidden: true,
     featured: false,
     title: "Spacious house in andheri west (3BHK)",
     locationLabel: "Entire rental unit in Mumbai, India",
