@@ -21,6 +21,23 @@ const expectedImageIds = [
   "8b353376-594b-4db4-8add-7d6221eb49ef",
 ];
 
+const expectedLabels = [
+  "Living room - Photo 1",
+  "Dining area - Photo 2",
+  "Bedroom 3 - Photo 1",
+  "Dining area - Photo 1",
+  "Additional photos - Photo 1",
+  "Living room - Photo 2",
+  "Living room - Photo 3",
+  "Full kitchen - Photo 1",
+  "Full kitchen - Photo 2",
+  "Full kitchen - Photo 3",
+  "Bedroom 1 - Photo 1",
+  "Bedroom 2 - Photo 1",
+  "Full bathroom 2 - Photo 1",
+  "Full bathroom 1 - Photo 1",
+];
+
 test("cozy-and-comfortable uses the current Airbnb photo set", () => {
   const source = fs.readFileSync(
     path.join(__dirname, "..", "public", "listings-data.js"),
@@ -38,4 +55,8 @@ test("cozy-and-comfortable uses the current Airbnb photo set", () => {
   });
 
   assert.deepEqual(actualImageIds, expectedImageIds);
+  assert.deepEqual(
+    Array.from(listing.images, (image) => image.label),
+    expectedLabels,
+  );
 });
