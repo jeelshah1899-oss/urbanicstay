@@ -47,14 +47,20 @@ window.URBANIC_LISTINGS = [
     airbnbUrl: "https://www.airbnb.co.in/rooms/1071708232154524015?source_impression_id=p3_1777554070_P3wRySRbwxoFB0t0",
     photoTourUrl: "https://www.airbnb.co.in/rooms/1071708232154524015?source_impression_id=p3_1777554070_P3wRySRbwxoFB0t0&modal=PHOTO_TOUR_SCROLLABLE",
     images: [
-      { url: "https://a0.muscache.com/im/pictures/hosting/Hosting-1071708232154524015/original/0eef5d0f-c872-4f95-bf18-d6c3047864fc.jpeg", label: "Cozy and comfortable - Photo 1" },
-      { url: "https://a0.muscache.com/im/pictures/hosting/Hosting-1071708232154524015/original/38b6c329-750b-4e3a-ae60-e86aa306111b.jpeg", label: "Cozy and comfortable - Photo 2" },
-      { url: "https://a0.muscache.com/im/pictures/hosting/Hosting-1071708232154524015/original/0094b81d-29e9-42fc-aaf3-9c0ab67437d9.jpeg", label: "Cozy and comfortable - Photo 3" },
-      { url: "https://a0.muscache.com/im/pictures/hosting/Hosting-1071708232154524015/original/8dc0f181-eb69-423e-a987-43ea6b2b6537.jpeg", label: "Cozy and comfortable - Photo 4" },
-      { url: "https://a0.muscache.com/im/pictures/hosting/Hosting-1071708232154524015/original/e76ea20c-01e4-439c-8a43-c53a988f8e1f.jpeg", label: "Cozy and comfortable - Photo 5" },
-      { url: "https://a0.muscache.com/im/pictures/hosting/Hosting-1071708232154524015/original/8ab591ee-6902-451b-b487-7197e63b6c63.jpeg", label: "Cozy and comfortable - Photo 6" },
-      { url: "https://a0.muscache.com/im/pictures/hosting/Hosting-1071708232154524015/original/93ea386e-a6e2-4ad9-8547-6819243a714e.jpeg", label: "Cozy and comfortable - Photo 7" },
-      { url: "https://a0.muscache.com/im/pictures/hosting/Hosting-1071708232154524015/original/d50f2600-e7bc-4a1d-b982-7318637e86d6.jpeg", label: "Cozy and comfortable - Photo 8" }
+      { url: "https://a0.muscache.com/im/pictures/hosting/Hosting-1711433470525242771/original/6c920970-76ae-4be1-846b-666ca3a0c0fd.jpeg", label: "Cozy and comfortable - Photo 1" },
+      { url: "https://a0.muscache.com/im/pictures/hosting/Hosting-1711433470525242771/original/99c44b0d-373f-49b9-b961-01c913fa7dbf.jpeg", label: "Cozy and comfortable - Photo 2" },
+      { url: "https://a0.muscache.com/im/pictures/hosting/Hosting-1711433470525242771/original/ec4866ef-36c8-4c91-9558-1017b394aa31.jpeg", label: "Cozy and comfortable - Photo 3" },
+      { url: "https://a0.muscache.com/im/pictures/hosting/Hosting-1711433470525242771/original/88f8f240-cfb4-47f9-8818-9c1ce1339bfd.jpeg", label: "Cozy and comfortable - Photo 4" },
+      { url: "https://a0.muscache.com/im/pictures/hosting/Hosting-1711433470525242771/original/bca829f0-949a-4232-b017-4d9d3351e6ab.jpeg", label: "Cozy and comfortable - Photo 5" },
+      { url: "https://a0.muscache.com/im/pictures/hosting/Hosting-1711433470525242771/original/f59a3c6f-f183-45ac-8cc3-31dce7e9b84a.jpeg", label: "Cozy and comfortable - Photo 6" },
+      { url: "https://a0.muscache.com/im/pictures/hosting/Hosting-1711433470525242771/original/f3d39a66-cfea-48ee-93ee-d313e5ba7d32.jpeg", label: "Cozy and comfortable - Photo 7" },
+      { url: "https://a0.muscache.com/im/pictures/hosting/Hosting-1711433470525242771/original/6f21c80b-c62d-44a1-b124-e547ec002ad1.jpeg", label: "Cozy and comfortable - Photo 8" },
+      { url: "https://a0.muscache.com/im/pictures/hosting/Hosting-1711433470525242771/original/249bb188-aca4-483b-8865-519b92ff4a9c.jpeg", label: "Cozy and comfortable - Photo 9" },
+      { url: "https://a0.muscache.com/im/pictures/hosting/Hosting-1711433470525242771/original/e1deaf4f-4edf-4fd1-a60d-e771e4ae3e7b.jpeg", label: "Cozy and comfortable - Photo 10" },
+      { url: "https://a0.muscache.com/im/pictures/hosting/Hosting-1711433470525242771/original/0539c67c-1747-4fc8-8d14-b4aedf19dca2.jpeg", label: "Cozy and comfortable - Photo 11" },
+      { url: "https://a0.muscache.com/im/pictures/hosting/Hosting-1711433470525242771/original/88ef0c4c-3587-4b8e-8a00-4382c912deac.jpeg", label: "Cozy and comfortable - Photo 12" },
+      { url: "https://a0.muscache.com/im/pictures/hosting/Hosting-1711433470525242771/original/df000234-297e-41a4-a5e2-d55568dc98b5.jpeg", label: "Cozy and comfortable - Photo 13" },
+      { url: "https://a0.muscache.com/im/pictures/hosting/Hosting-1711433470525242771/original/8b353376-594b-4db4-8add-7d6221eb49ef.jpeg", label: "Cozy and comfortable - Photo 14" }
     ]
   },
   {
